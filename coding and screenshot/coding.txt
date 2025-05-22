@@ -1,0 +1,78 @@
+#include <Wire.h>
+#include <Adafruit_SSD1306.h>
+#include <DHT.h>
+#include <ESP32Servo.h>  // ESP32 compatible Servo library
+
+#define DHTPIN 4
+#define DHTTYPE DHT22
+#define PIRPIN 5
+#define LEDPIN 2
+#define BUZZER 19
+#define LDRPIN 36
+#define VIBRATIONPIN 34
+#define RELAY1 18
+#define RELAY2 25
+#define SERVOPIN 23
+
+DHT dht(DHTPIN, DHTTYPE);
+Adafruit_SSD1306 display(128, 64, &Wire, -1);
+Servo servo;
+
+HardwareSerial gpsSerial(1); // Serial1 for GPS
+
+void setup() {
+  Serial.begin(115200);
+  gpsSerial.begin(9600, SERIAL_8N1, 16, 17); // RX=16, TX=17 pins
+
+  dht.begin();
+  pinMode(PIRPIN, INPUT);
+  pinMode(LEDPIN, OUTPUT);
+  pinMode(BUZZER, OUTPUT);
+  pinMode(RELAY1, OUTPUT);
+  pinMode(RELAY2, OUTPUT);
+  servo.attach(SERVOPIN);
+
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0,0);
+  display.println("ISMBMS Phase 5");
+  display.display();
+}
+
+void loop() {
+  float temp = dht.readTemperature();
+  float hum = dht.readHumidity();
+  int motion = digitalRead(PIRPIN);
+  int light = analogRead(LDRPIN);
+  int vibration = analogRead(VIBRATIONPIN);
+
+  display.clearDisplay();
+  display.setCursor(0,0);
+  display.print("Temp: "); display.print(temp); display.println(" C");
+  display.print("Hum: "); display.print(hum); display.println(" %");
+  display.print("Light: "); display.println(light);
+  display.print("Vib: "); display.println(vibration);
+  display.print("Motion: "); display.println(motion ? "YES" : "NO");
+  display.display();
+
+  digitalWrite(LEDPIN, motion);
+  digitalWrite(BUZZER, motion);
+
+  if (vibration > 700) {
+    servo.write(90);
+  } else {
+    servo.write(0);
+  }
+
+  digitalWrite(RELAY1, light < 500);
+  digitalWrite(RELAY2, temp > 30);
+
+  while (gpsSerial.available()) {
+    char c = gpsSerial.read();
+    Serial.print(c);
+  }
+
+  delay(2000);
+}
