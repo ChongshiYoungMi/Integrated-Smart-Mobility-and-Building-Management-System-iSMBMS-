@@ -8,7 +8,60 @@ Abstract:
  
 
 
+🔧 Features
+
+- 🌡️ Temperature and Humidity Monitoring** using the DHT22 sensor.
+- 🚶 Motion Detection** with a PIR sensor for intruder alert.
+- 🔊 Buzzer and LED Alerts** based on motion detection.
+- 💡 Light Intensity Detection** using an LDR and control of lighting via relays.
+- 🔩 Vibration Monitoring** for safety alert using analog sensor.
+- 🔁 Servo Motor Control** to simulate physical movement in response to vibration.
+- 🖥️ OLED Display** for local sensor data visualization.
+- 🔌 Dual Relay Control** for devices like fans and lights.
+- 🌍 GPS Mock Support** (optional for simulations; can be activated using NMEA strings).
+
+---
+
+🧰 Components Used
+
+| Component             | Description                                  |
+|----------------------|----------------------------------------------|
+| ESP32                | Main microcontroller unit                    |
+| DHT22                | Temperature and Humidity sensor              |
+| PIR Sensor           | Motion detection                             |
+| Buzzer + LED         | Alerts                                       |
+| LDR Module           | Light sensor with AO pin                     |
+| Vibration Sensor     | Analog vibration detection                   |
+| Servo Motor          | For automation response                      |
+| 2-Channel Relay      | Fan and light control                        |
+| OLED SSD1306         | 128x64 I2C display                           |
+| GPS Module (Mock)    | Optional for location tracking               |
+
+---
+🔌 Circuit Connections
+
+| Module           | ESP32 GPIO Pin |
+|------------------|----------------|
+| DHT22            | GPIO 4         |
+| PIR              | GPIO 5         |
+| LED              | GPIO 2         |
+| Buzzer           | GPIO 19        |
+| LDR (AO)         | GPIO 35        |
+| Vibration Sensor | GPIO 34        |
+| Relay 1          | GPIO 18        |
+| Relay 2          | GPIO 25        |
+| Servo Motor      | GPIO 23        |
+| OLED SDA         | GPIO 21        |
+| OLED SCL         | GPIO 22        |
+| GPS TX (Mock)    | GPIO 17        |
+| GPS RX (Mock)    | GPIO 16        |
+
+🔎 **Note:** In Wokwi, the GPS module is simulated using fake NMEA data. For real hardware, connect a Neo-6M GPS module via UART.
+
+
+
 A. Project Demonstration
+
 
 Overview
    The final integrated system is demonstrated to stakeholders, showcasing full functionality across building automation, vehicle tracking, maintenance prediction, and mobile control. This phase verifies that all modules are synchronized and ready for deployment. Stakeholders evaluate the usability and performance of the platform.
@@ -28,25 +81,27 @@ Outcome
  •Stakeholders approve the project for documentation and final submission.
 
 
-A. Project Demonstration
+B. Project Documentation
 
 
 Overview
-   The final integrated system is demonstrated to stakeholders, showcasing full functionality across building automation, vehicle tracking, maintenance prediction, and mobile control. This phase verifies that all modules are synchronized and ready for deployment. Stakeholders evaluate the usability and performance of the platform.
+This section compiles technical documentation for the full ISMBMS platform, covering architecture, software, .hardware, and user interaction layers. The documentation ensures maintainability and provides a reference for future enhancements
 
 
-Demonstration Details
- •System Dashboard: Displays real-time data from buildings (temperature, humidity, energy) and fleets (vehicle speed, GPS, fuel level).
- •Mobile Interface: Remote control of devices like HVAC and lighting through a secure mobile app.
- •Fleet Telematics: Live tracking of vehicles with route optimization and maintenance alerts.
- •Predictive Maintenance: Simulated sensor anomalies (e.g., vibration, temperature rise) trigger alerts for preventive repairs.
- •Cloud Connectivity: All sensor data flows through Firebase or equivalent, allowing seamless integration and global accessibility.
+Documentation Sections
+      •	Components: List of sensors (DHT22, PIR, GPS), actuators (Relay, Buzzer), and controllers (ESP32).
+      •	Software: Source code for IoT sensors, backend Firebase integration, and mobile app logic.
+      •	Architecture: Diagrams showing system layout, including cloud services, data flow, and mobile integration.
+      •	Integration Steps: Configuration guides for sensors, setting up Firebase, deploying mobile dashboards.
+      •	User Manuals: How to use mobile app, manage alerts, view dashboards, and respond to events.
+      •	Security & Authentication: Outlines device authentication and secure data transmission practices.
 
 
 Outcome
- •All integrated features perform successfully.
- •Demonstration confirms real-time responsiveness and control.
- •Stakeholders approve the project for documentation and final submission.
+      •	Clear, traceable documentation handed over.
+      •	Stakeholders and technicians can independently maintain or expand the system.
+      •	Documentation reviewed and validated by technical leads.
+
 
 
 C. Feedback and Final Adjustments
